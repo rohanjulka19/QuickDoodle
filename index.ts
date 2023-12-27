@@ -97,4 +97,5 @@ if (! penElement) {
 
 penElement.addEventListener('click', (e) => {
     drawWindow.color = "black"
+    drawWindow.ctx.lineWidth = 1
 })
