@@ -4,7 +4,7 @@ class DrawWindow {
     prevX: number;
     prevY: number;
     penDown: boolean;
-    
+
     constructor(canvasId: string) {
         this.canvas = this.getCanvasElement(canvasId) as HTMLCanvasElement
         this.ctx = this.getCanvasContext(this.canvas)
@@ -12,7 +12,14 @@ class DrawWindow {
         this.penDown = false
         this.canvas.width = this.canvas.offsetWidth;
         this.canvas.height = this.canvas.offsetHeight;
+        this.color = "black"
+        this.ctx.lineCap = "round"
+        this.ctx.strokeStyle = this.color 
         this.initializeCanvasEvents()
+    }
+
+    set color(strokeColor: string) {
+        this.ctx.strokeStyle = strokeColor
     }
 
     initializeCanvasEvents() {
@@ -70,4 +77,24 @@ class DrawWindow {
     }
 }
 
-new DrawWindow('canvas')
+let drawWindow: DrawWindow = new DrawWindow('canvas')
+
+let eraserElement: HTMLElement| null = document.getElementById('eraser')
+if (! eraserElement) {
+    throw new Error("No eraser element found")
+}
+
+eraserElement.addEventListener('click', (e) => {
+    drawWindow.color = "white"
+    drawWindow.ctx.lineWidth = 50
+})
+
+let penElement: HTMLElement| null = document.getElementById('pen')
+if (! penElement) {
+    throw new Error("No eraser element found")
+}
+
+
+penElement.addEventListener('click', (e) => {
+    drawWindow.color = "black"
+})
