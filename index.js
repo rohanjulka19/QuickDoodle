@@ -15,6 +15,10 @@ class DrawWindow {
     set color(strokeColor) {
         this.ctx.strokeStyle = strokeColor;
     }
+    set lineWidth(lineWidth) {
+        this.ctx.lineWidth = lineWidth;
+    }
+
     initializeCanvasEvents() {
         this.canvas.addEventListener('mousedown', (e) => {
             this.startDrawing.call(this, e.x, e.y);
@@ -69,7 +73,7 @@ if (!eraserElement) {
 }
 eraserElement.addEventListener('click', (e) => {
     drawWindow.color = "white";
-    drawWindow.ctx.lineWidth = 50;
+    drawWindow.lineWidth = 50;
 });
 let penElement = document.getElementById('pen');
 if (!penElement) {
@@ -77,5 +81,15 @@ if (!penElement) {
 }
 penElement.addEventListener('click', (e) => {
     drawWindow.color = "black";
-    drawWindow.ctx.lineWidth = 1;
+    drawWindow.lineWidth = 1;
 });
+
+let colorElems = document.getElementsByClassName('color')
+for (let colorElem of colorElems) {
+    colorElem.addEventListener('click', (e) => drawWindow.color = e.target.style.background) 
+}
+
+let lineWidthElems = document.getElementsByClassName('line-width')
+for (let lineWidthElem of lineWidthElems) {
+    lineWidthElem.addEventListener('click', (e) => drawWindow.lineWidth =  e.currentTarget.children[0].style.height.replace('px', ''))
+}
