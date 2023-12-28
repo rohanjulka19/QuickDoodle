@@ -15,11 +15,16 @@ class DrawWindow {
         this.color = "black"
         this.ctx.lineCap = "round"
         this.ctx.strokeStyle = this.color 
+        this.lineWidth = 1
         this.initializeCanvasEvents()
     }
 
     set color(strokeColor: string) {
         this.ctx.strokeStyle = strokeColor
+    }
+
+    set lineWidth(lineWidth: number) {
+        this.ctx.lineWidth = lineWidth
     }
 
     initializeCanvasEvents() {
@@ -77,25 +82,51 @@ class DrawWindow {
     }
 }
 
-let drawWindow: DrawWindow = new DrawWindow('canvas')
-
-let eraserElement: HTMLElement| null = document.getElementById('eraser')
-if (! eraserElement) {
-    throw new Error("No eraser element found")
+function getElementByIdOrThrowError(id: string): HTMLElement {
+    if(!id) {
+        throw new Error("ID of the element is required Inside function - getElementByIdOrThrowError")
+    }
+    let element: HTMLElement | null = document.getElementById(id)
+    if (!element) {
+        throw new Error("")
+    }
+    return element
 }
+
+let drawWindow: DrawWindow = new DrawWindow('canvas')
+let penColorOptions: HTMLElement  = getElementByIdOrThrowError('pen-color-options')
+let penWidthOptions: HTMLElement  =  getElementByIdOrThrowError('pen-width-options')
+let eraserOptions: HTMLElement =  getElementByIdOrThrowError('erase-options')
+let eraserElement: HTMLElement =  getElementByIdOrThrowError('eraser')
+let penElement: HTMLElement = getElementByIdOrThrowError('pen')
+
+let getElemHeight = (e: Event) => parseInt(((e.currentTarget as HTMLAnchorElement).children[0] as HTMLHRElement).style.height.replace('px', ''))
+let getElemBackground =  (e: Event) => drawWindow.color = (e.target as HTMLAnchorElement).style.background
+
+function setEventListenerForClassName(className: string, event: string, callback: (e: Event) => {}) {
+    let elems = document.getElementsByClassName(className)
+    for (let elem of elems) {
+        elem.addEventListener(event, callback)
+    }
+}
+
 
 eraserElement.addEventListener('click', (e) => {
     drawWindow.color = "white"
     drawWindow.ctx.lineWidth = 50
+    penColorOptions.style.display = "none" 
+    penWidthOptions.style.display = "none"
+    eraserOptions.style.display = "grid"
 })
-
-let penElement: HTMLElement| null = document.getElementById('pen')
-if (! penElement) {
-    throw new Error("No eraser element found")
-}
-
 
 penElement.addEventListener('click', (e) => {
     drawWindow.color = "black"
     drawWindow.ctx.lineWidth = 1
+    penColorOptions.style.display = "grid" 
+    penWidthOptions.style.display = "grid"
+    eraserOptions.style.display = "none"
 })
+
+setEventListenerForClassName('color', 'click', getElemHeight)
+setEventListenerForClassName('line-width', 'click', getElemBackground)
+setEventListenerForClassName('eraser-radius', 'click', getElemBackground)

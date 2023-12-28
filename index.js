@@ -10,6 +10,7 @@ class DrawWindow {
         this.color = "black";
         this.ctx.lineCap = "round";
         this.ctx.strokeStyle = this.color;
+        this.lineWidth = 1;
         this.initializeCanvasEvents();
     }
     set color(strokeColor) {
@@ -18,7 +19,6 @@ class DrawWindow {
     set lineWidth(lineWidth) {
         this.ctx.lineWidth = lineWidth;
     }
-
     initializeCanvasEvents() {
         this.canvas.addEventListener('mousedown', (e) => {
             this.startDrawing.call(this, e.x, e.y);
@@ -66,30 +66,44 @@ class DrawWindow {
         this.prevY = y;
     }
 }
+function getElementByIdOrThrowError(id) {
+    if (!id) {
+        throw new Error("ID of the element is required Inside function - getElementByIdOrThrowError");
+    }
+    let element = document.getElementById(id);
+    if (!element) {
+        throw new Error("");
+    }
+    return element;
+}
 let drawWindow = new DrawWindow('canvas');
-let eraserElement = document.getElementById('eraser');
-if (!eraserElement) {
-    throw new Error("No eraser element found");
+let penColorOptions = getElementByIdOrThrowError('pen-color-options');
+let penWidthOptions = getElementByIdOrThrowError('pen-width-options');
+let eraserOptions = getElementByIdOrThrowError('erase-options');
+let eraserElement = getElementByIdOrThrowError('eraser');
+let penElement = getElementByIdOrThrowError('pen');
+let getElemHeight = (e) => parseInt(e.currentTarget.children[0].style.height.replace('px', ''));
+let getElemBackground = (e) => drawWindow.color = e.target.style.background;
+function setEventListenerForClassName(className, event, callback) {
+    let elems = document.getElementsByClassName(className);
+    for (let elem of elems) {
+        elem.addEventListener(event, callback);
+    }
 }
 eraserElement.addEventListener('click', (e) => {
     drawWindow.color = "white";
-    drawWindow.lineWidth = 50;
+    drawWindow.ctx.lineWidth = 50;
+    penColorOptions.style.display = "none";
+    penWidthOptions.style.display = "none";
+    eraserOptions.style.display = "grid";
 });
-let penElement = document.getElementById('pen');
-if (!penElement) {
-    throw new Error("No eraser element found");
-}
 penElement.addEventListener('click', (e) => {
     drawWindow.color = "black";
-    drawWindow.lineWidth = 1;
+    drawWindow.ctx.lineWidth = 1;
+    penColorOptions.style.display = "grid";
+    penWidthOptions.style.display = "grid";
+    eraserOptions.style.display = "none";
 });
-
-let colorElems = document.getElementsByClassName('color')
-for (let colorElem of colorElems) {
-    colorElem.addEventListener('click', (e) => drawWindow.color = e.target.style.background) 
-}
-
-let lineWidthElems = document.getElementsByClassName('line-width')
-for (let lineWidthElem of lineWidthElems) {
-    lineWidthElem.addEventListener('click', (e) => drawWindow.lineWidth =  e.currentTarget.children[0].style.height.replace('px', ''))
-}
+setEventListenerForClassName('color', 'click', getElemHeight);
+setEventListenerForClassName('line-width', 'click', getElemBackground);
+setEventListenerForClassName('eraser-radius', 'click', getElemBackground);

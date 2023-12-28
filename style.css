@@ -62,10 +62,6 @@ canvas {
     width: 100%;
 }
 
-.erase-options {
-    display: none;
-}
-
 
 a.tool.line-width {
     grid-column-start: 1;
@@ -80,4 +76,20 @@ a.tool.line-width {
 
 a.tool.line-width > hr {
     background: black;
+}
+
+.erase-options {
+    display: none;
+}
+
+.eraser-radius {
+    padding: 0.5rem 0.3rem;
+    display: grid;
+    place-items: center;
+}
+
+.eraser-radius > span {
+    background: black;
+    border-radius: 50%;
+    display: inline-block;
 }
