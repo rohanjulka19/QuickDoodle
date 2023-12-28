@@ -66,6 +66,14 @@ class DrawWindow {
         this.prevY = y;
     }
 }
+let drawWindow = new DrawWindow('canvas');
+let penColorOptions = getElementByIdOrThrowError('pen-color-options');
+let penWidthOptions = getElementByIdOrThrowError('pen-width-options');
+let eraserOptions = getElementByIdOrThrowError('erase-options');
+let eraserElement = getElementByIdOrThrowError('eraser');
+let penElement = getElementByIdOrThrowError('pen');
+let getElemHeight = (e) => parseInt(e.currentTarget.children[0].style.height.replace('px', ''));
+let getElemBackground = (e) => drawWindow.color = e.target.style.background;
 function getElementByIdOrThrowError(id) {
     if (!id) {
         throw new Error("ID of the element is required Inside function - getElementByIdOrThrowError");
@@ -76,14 +84,6 @@ function getElementByIdOrThrowError(id) {
     }
     return element;
 }
-let drawWindow = new DrawWindow('canvas');
-let penColorOptions = getElementByIdOrThrowError('pen-color-options');
-let penWidthOptions = getElementByIdOrThrowError('pen-width-options');
-let eraserOptions = getElementByIdOrThrowError('erase-options');
-let eraserElement = getElementByIdOrThrowError('eraser');
-let penElement = getElementByIdOrThrowError('pen');
-let getElemHeight = (e) => parseInt(e.currentTarget.children[0].style.height.replace('px', ''));
-let getElemBackground = (e) => drawWindow.color = e.target.style.background;
 function setEventListenerForClassName(className, event, callback) {
     let elems = document.getElementsByClassName(className);
     for (let elem of elems) {

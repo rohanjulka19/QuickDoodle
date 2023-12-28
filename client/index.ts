@@ -82,6 +82,16 @@ class DrawWindow {
     }
 }
 
+let drawWindow: DrawWindow = new DrawWindow('canvas')
+let penColorOptions: HTMLElement  = getElementByIdOrThrowError('pen-color-options')
+let penWidthOptions: HTMLElement  =  getElementByIdOrThrowError('pen-width-options')
+let eraserOptions: HTMLElement =  getElementByIdOrThrowError('erase-options')
+let eraserElement: HTMLElement =  getElementByIdOrThrowError('eraser')
+let penElement: HTMLElement = getElementByIdOrThrowError('pen')
+
+let getElemHeight = (e: Event) => parseInt(((e.currentTarget as HTMLAnchorElement).children[0] as HTMLHRElement).style.height.replace('px', ''))
+let getElemBackground =  (e: Event) => drawWindow.color = (e.target as HTMLAnchorElement).style.background
+
 function getElementByIdOrThrowError(id: string): HTMLElement {
     if(!id) {
         throw new Error("ID of the element is required Inside function - getElementByIdOrThrowError")
@@ -93,23 +103,12 @@ function getElementByIdOrThrowError(id: string): HTMLElement {
     return element
 }
 
-let drawWindow: DrawWindow = new DrawWindow('canvas')
-let penColorOptions: HTMLElement  = getElementByIdOrThrowError('pen-color-options')
-let penWidthOptions: HTMLElement  =  getElementByIdOrThrowError('pen-width-options')
-let eraserOptions: HTMLElement =  getElementByIdOrThrowError('erase-options')
-let eraserElement: HTMLElement =  getElementByIdOrThrowError('eraser')
-let penElement: HTMLElement = getElementByIdOrThrowError('pen')
-
-let getElemHeight = (e: Event) => parseInt(((e.currentTarget as HTMLAnchorElement).children[0] as HTMLHRElement).style.height.replace('px', ''))
-let getElemBackground =  (e: Event) => drawWindow.color = (e.target as HTMLAnchorElement).style.background
-
 function setEventListenerForClassName(className: string, event: string, callback: (e: Event) => {}) {
     let elems = document.getElementsByClassName(className)
     for (let elem of elems) {
         elem.addEventListener(event, callback)
     }
 }
-
 
 eraserElement.addEventListener('click', (e) => {
     drawWindow.color = "white"
