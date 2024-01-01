@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { Message, request } from "websocket";
+import { Message, connection, request } from "websocket";
 
 const WebSocketServer = require('websocket').server;
 const http = require('http');
@@ -15,7 +15,9 @@ server.listen(9000, () => {
 
 const wServer = new WebSocketServer({
     httpServer: server,
-    autoAcceptConnections: false
+    autoAcceptConnections: false,
+    maxReceivedFrameSize: 131072,
+    maxReceivedMessageSize: 10 * 1024 * 1024
 })
 
 function originIsAllowed(origin: string): boolean{
@@ -23,16 +25,23 @@ function originIsAllowed(origin: string): boolean{
     return true
 }
 
+const connections: connection[] = []
+
 wServer.on('request', (request: request) => {
     if(!originIsAllowed(request.origin)) {
         request.reject()
         console.log(`Connection From Origin - ${request.origin} Rejected`)
         return
     }
-    const connection = request.accept(null, request.origin) //Chosen Protocol ?
+   const connection = request.accept(null, request.origin)
+    connections.push(connection)
+    console.log("Connection Open")
     connection.on('message', (message: Message) => {
-
+        console.log("recieved message")
+        let message_obj = (message.type == "utf8" && message.utf8Data) || ""
+        connections.map((c) =>connection !== c ? c.send(message_obj): "")
     })
+
     connection.on('close', (reasonCode: number, desc: string)=> {
 
     })
