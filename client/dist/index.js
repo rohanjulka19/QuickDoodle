@@ -25,7 +25,7 @@ function setEventListenerForClassName(className, event, callback) {
 }
 eraserElement.addEventListener('click', (e) => {
     drawWindow.color = "white";
-    drawWindow.ctx.lineWidth = 50;
+    drawWindow.ctx.lineWidth = 10;
     penColorOptions.style.display = "none";
     penWidthOptions.style.display = "none";
     eraserOptions.style.display = "grid";

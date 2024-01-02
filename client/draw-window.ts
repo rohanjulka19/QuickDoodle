@@ -6,7 +6,7 @@ class DrawWindow {
     penDown: boolean;
     frame: DOMRect;
     canvasData: string;
-    eventMap: Record<string, [any]>
+    eventMap: Record<string, any[]>
 
     constructor(canvasId: string) {
         this.canvas = this.getCanvasElement(canvasId) as HTMLCanvasElement
@@ -21,7 +21,9 @@ class DrawWindow {
         this.lineWidth = 1 
         this.frame = this.canvas.getBoundingClientRect()
         this.canvasData = this.canvas.toDataURL()
-        this.eventMap = {}
+        this.eventMap = {
+            "draw": []
+        }
         this.initializeCanvasEvents()
     }
 
@@ -51,21 +53,7 @@ class DrawWindow {
     }
 
     on(event: any, callback: any) {
-        this.eventMap[event] = this.eventMap[event] || []
         this.eventMap[event].push(callback)
-    }
-
-    canvasIsChanged(): boolean {
-        const currentCanvasData = this.canvas.toDataURL()
-        if(currentCanvasData !== this.canvasData) {
-            this.canvasData = currentCanvasData
-            return true
-        }
-        return false
-    }
-
-    getCursorLocation(): [number, number] {
-        return [this.prevX,this.prevY]
     }
 
     initializeCanvasEvents() {

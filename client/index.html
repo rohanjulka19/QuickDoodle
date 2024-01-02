@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas" data-cy="canvas"></canvas>
     <div id="toolbar" class="toolbar">
         <div id="tools" class="options">
-            <a id="eraser" class="tool"><i class="fa-solid fa-eraser"></i></a>
-            <a id="pen" class="tool"><i class="fa-solid fa-pen"></i></a>
+            <a id="eraser" class="tool" data-cy="eraser-btn"><i class="fa-solid fa-eraser"></i></a>
+            <a id="pen" class="tool" data-cy="pen-btn"><i class="fa-solid fa-pen"></i></a>
         </div>
 
-        <div id="pen-color-options" class="options pen-options">
+        <div id="pen-color-options" class="options pen-options" data-cy="color-btn-section">
             <a class="color tool" style="background: red;"></a>        
             <a class="color tool" style="background: green;"></a>        
             <a class="color tool" style="background: blue;"> </a>        
@@ -23,14 +23,14 @@
             <a class="color tool" style="background: yellow;"> </a>        
             <a class="color tool" style="background: orange;"></a>
         </div>
-        <div id="pen-width-options" class="options pen-options">
+        <div id="pen-width-options" class="options pen-options" data-cy="line-width-section">
             <a class="tool line-width"><hr style="height: 1px;"></a>        
             <a class="tool line-width"><hr style="height: 5px;"></a>        
             <a class="tool line-width"><hr style="height: 10px;"></a>        
             <a class="tool line-width"><hr style="height: 13px;"></a>        
             <a class="tool line-width"><hr style="height: 17px;"></a> 
         </div>
-        <div id="erase-options" class="options erase-options">
+        <div id="erase-options" class="options erase-options" data-cy="eraser-width-section">
             <a class="eraser-radius tool"><span style="width: 10px; height: 10px;"></span></a>        
             <a class="eraser-radius tool"><span style="width:15px; height: 15px;"></span></a>        
             <a class="eraser-radius tool"><span style="width: 20px; height: 20px;"></span></a>       

@@ -13,7 +13,9 @@ class DrawWindow {
         this.lineWidth = 1;
         this.frame = this.canvas.getBoundingClientRect();
         this.canvasData = this.canvas.toDataURL();
-        this.eventMap = {};
+        this.eventMap = {
+            "draw": []
+        };
         this.initializeCanvasEvents();
     }
     set color(strokeColor) {
@@ -36,19 +38,7 @@ class DrawWindow {
         return this.frame.left;
     }
     on(event, callback) {
-        this.eventMap[event] = this.eventMap[event] || [];
         this.eventMap[event].push(callback);
-    }
-    canvasIsChanged() {
-        const currentCanvasData = this.canvas.toDataURL();
-        if (currentCanvasData !== this.canvasData) {
-            this.canvasData = currentCanvasData;
-            return true;
-        }
-        return false;
-    }
-    getCursorLocation() {
-        return [this.prevX, this.prevY];
     }
     initializeCanvasEvents() {
         this.canvas.addEventListener('mousedown', (e) => {
