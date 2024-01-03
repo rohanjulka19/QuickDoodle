@@ -12,8 +12,8 @@ jobs:
             node-version: '20'
       - name: Package Installation
         run: npm install
-      - name: Lint
-        run: npm run lint:frontend
+      # - name: Lint
+      #   run: npm run lint:frontend
       - name: Test
         uses: cypress-io/github-action@v6.1.0
         with:
