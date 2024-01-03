@@ -1,4 +1,4 @@
-class DrawWindow {
+export class DrawWindow {
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
     prevX: number;

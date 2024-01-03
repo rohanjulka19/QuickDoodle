@@ -1,4 +1,6 @@
-let drawWindow: DrawWindow = new DrawWindow('canvas')
+import { DrawWindow } from "./draw-window"
+
+export let drawWindow: DrawWindow = new DrawWindow('canvas')
 let penColorOptions: HTMLElement  = getElementByIdOrThrowError('pen-color-options')
 let penWidthOptions: HTMLElement  =  getElementByIdOrThrowError('pen-width-options')
 let eraserOptions: HTMLElement =  getElementByIdOrThrowError('erase-options')

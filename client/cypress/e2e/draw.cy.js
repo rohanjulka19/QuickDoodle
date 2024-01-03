@@ -2,7 +2,7 @@
 describe('Test draw and erase capabilities', () => {
    
   beforeEach(() => {
-    cy.visit("./index.html")
+    cy.visit("/index.html")
     cy.getBySel('canvas').as('canvas')
   })  
   

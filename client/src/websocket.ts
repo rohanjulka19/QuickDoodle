@@ -1,3 +1,5 @@
+import { drawWindow } from "./index"
+
 let socket = new WebSocket("ws://localhost:9000")
 socket.onopen = function(e) {
     drawWindow.on('draw', (drawEvt: any) => {
