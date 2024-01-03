@@ -1,0 +1,34 @@
+name: ci-cd
+on: push
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Node Setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run lint:frontend
+
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+     - uses: actions/cypress-io/github-action@v6.1.0
+       with:
+         start: npm run dev:frontend
+         project: ./client
+         browser: chrome
+  build:
+     needs: test
+     runs-on: ubuntu-latest
+     steps:
+       - run: npm run build:frontend
