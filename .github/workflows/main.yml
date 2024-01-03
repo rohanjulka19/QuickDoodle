@@ -16,13 +16,14 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      - run: npm install
       - run: npm run lint:frontend
 
   test:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-     - uses: actions/cypress-io/github-action@v6.1.0
+     - uses: cypress-io/github-action@v6.1.0
        with:
          start: npm run dev:frontend
          project: ./client
