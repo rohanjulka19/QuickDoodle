@@ -1,9 +1,12 @@
-name: ci
+name: ci-cd-frontend
 on: push
 jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
+      - name: Set Current Date
+        id: date
+        run: echo "::set-output name=date::$(date + '%Y-%m-%d')"
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Node
@@ -14,11 +17,6 @@ jobs:
         run: npm install
       # - name: Lint
       #   run: npm run lint:frontend
-      - name: Add Screenshots Dir
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
       - name: Test
         uses: cypress-io/github-action@v6.1.0
         with:
@@ -27,5 +25,27 @@ jobs:
           browser: chrome
       - name: Build
         run: npm run build:frontend
-        
+      - name: Upload Build Artifacts
+        uses: actions/upload-pages-artifact@v2
+        with:
+          name: github-pages
+          path: ./client/dist
+  deploy:
+        needs: ci
+        permissions:
+          pages: write
+          id-token: write
+        environment:
+          name: github-pages
+          url: ${{ steps.deployment.outputs.page_url }}
+        runs-on: ubuntu-latest
+        steps:
+          - name: Set Current Date
+            id: date
+            run: echo "::set-output name=date::$(date + '%Y-%m-%d')"
+          - name: Deploy to github pages
+            id: deployment
+            uses: actions/deploy-pages@v3
+            
+            
         
