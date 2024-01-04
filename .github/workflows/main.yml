@@ -1,0 +1,31 @@
+name: ci
+on: push
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with: 
+            node-version: '20'
+      - name: Package Installation
+        run: npm install
+      # - name: Lint
+      #   run: npm run lint:frontend
+      - name: Add Screenshots Dir
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - name: Test
+        uses: cypress-io/github-action@v6.1.0
+        with:
+          start: npm run dev:frontend
+          project: ./client
+          browser: chrome
+      - name: Build
+        run: npm run build:frontend
+        
+        
