@@ -45,7 +45,7 @@ jobs:
             run: echo "::set-output name=date::$(date + '%Y-%m-%d')"
           - name: Deploy to github pages
             id: deployment
-            uses: actions/deploy-pages@v4
+            uses: actions/deploy-pages@v3
             
             
         
