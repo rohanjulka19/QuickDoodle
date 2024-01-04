@@ -8,8 +8,9 @@
     "build:backend": "",
     "lint:backend": "eslint server",
     "dev:frontend": "npx vite serve ./client",
-    "build:frontend": "npx vite build ./client",
+    "build:frontend": "npx vite build ./client --base=./",
     "lint:frontend": "eslint client",
+    "lint": "npm-run-all lint:frontend lint:backend",
     "dev": "npm-run-all -p dev:frontend dev:backend",
     "prod-build": "npm-run-all build:frontend build:backend"
   },
