@@ -28,7 +28,7 @@ jobs:
       - name: Upload Build Artifacts
         uses: actions/upload-pages-artifact@v2
         with:
-          name: frontend-${{ steps.date.outputs.date }}
+          name: github-pages
           path: ./client/dist
   deploy:
         needs: ci
@@ -46,8 +46,6 @@ jobs:
           - name: Deploy to github pages
             id: deployment
             uses: actions/deploy-pages@v4
-            with:
-              artifact-name: frontend-${{ steps.date.outputs.date }}
             
             
         
