@@ -123,5 +123,5 @@ function readFiles(image1, image2) {
 }
 
 function getRelPathForScreenshot(image) {
-    return './cypress/screenshots/' + image + '.png'
+    return './cypress/screenshots/draw.cy.js/' + image + '.png'
 }
